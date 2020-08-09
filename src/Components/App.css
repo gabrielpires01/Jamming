@@ -2,6 +2,7 @@ body,
 html,
 #root {
   height: 100%;
+  box-sizing: border-box;
 }
 
 html {
@@ -43,6 +44,36 @@ h2 {
   justify-content: space-between;
   width: 100%;
 }
+
+.videoPlayer {
+  display: flex;
+  position: fixed;
+  flex-direction: row;
+  bottom: 0;
+  width: 66%;
+  border-radius: 30%;
+}
+
+.videoPlayer video {
+  background-color:  #6c41ecb9;
+  width: 80%;
+  height: 40px;
+}
+
+.videoPlayer div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: auto;
+  min-width: 20%;
+  padding: 0 20px;
+  color: rgb(19, 19, 19);
+  background-color:  #c2c2c2ee;
+  font-size: 1.1rem;
+}
+
+
 
 @media only screen and (max-width: 1020px) {
   .App-playlist {

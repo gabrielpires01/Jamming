@@ -22,7 +22,8 @@ class Playlist extends React.Component {
                 placeholder='Playlist Name'/>
                 <TrackList tracks={this.props.playlistTracks} 
                 onRemove={this.props.onRemove} 
-                isRemoval={true} />
+                isRemoval={true}
+                sampleTrack={this.props.sampleTrack} />
                 <LoadingSave onSave={this.props.onSave}/>
             </div>
         )                                                         

@@ -15,7 +15,8 @@ class App extends React.Component {
       searchResults: [],
       playlistName: 'New Playlist',
       playlistTracks: [],
-      audioTrack: []
+      audioUrl: '',
+      trackName: ''
     }
 
     this.addTrack = this.addTrack.bind(this)
@@ -23,6 +24,11 @@ class App extends React.Component {
     this.updatePlaylistName = this.updatePlaylistName.bind(this)
     this.savePlaylist = this.savePlaylist.bind(this)
     this.search = this.search.bind(this)
+    this.getSampleTrack = this.getSampleTrack.bind(this)
+  }
+
+  componentDidMount() {
+    Spotify.getAccessToken()
   }
 
   removeTrack(track) {
@@ -77,6 +83,18 @@ class App extends React.Component {
     })
   }
 
+  getSampleTrack(track) {
+    let trackId = track.id
+    Spotify.sampleTrack(trackId)
+      .then(jsonResponse => {
+        let Url = jsonResponse.preview_url;
+        this.setState({
+          trackName: track.name,
+          audioUrl: Url
+        })
+      })
+  }
+
   render() {
     
     return (
@@ -87,13 +105,20 @@ class App extends React.Component {
           <div className="App-playlist">
             <SearchResults searchResults={this.state.searchResults}
               onAdd={this.addTrack}
-              SampleTrack={this.getSampleTrack} />
+              sampleTrack={this.getSampleTrack} />
             <Playlist playlistName={this.state.playlistName} 
               playlistTracks={this.state.playlistTracks}
               onRemove={this.removeTrack}
               onNameChange={this.updatePlaylistName} 
-              onSave={this.savePlaylist}/>
+              onSave={this.savePlaylist}
+              sampleTrack={this.getSampleTrack}/>
           </div>
+          {this.state.audioUrl ? 
+            <div className='videoPlayer'>
+              <div>{this.state.trackName}</div> 
+              <video src={this.state.audioUrl} controls></video>
+            </div> : null
+          }
         </div>
       </div>
     )

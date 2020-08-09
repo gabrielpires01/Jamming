@@ -1,7 +1,7 @@
 
 let accessToken;
 
-const clientID;
+const clientID = '';
 const redirectURI = "http://localhost:3000";
 
 const Spotify ={
@@ -75,26 +75,15 @@ const Spotify ={
 
         
     },
-    sampleTrack(playlistName) {
+    sampleTrack(trackId) {
         const accessToken = Spotify.getAccessToken();
         const header = {Authorization: `Bearer ${accessToken}`};
-        let userId;
 
-        fetch('https://api.spotify.com/v1/me', {headers: header})
-            .then(response => response.json())
-            .then(jsonResponse => {
-                userId = jsonResponse.id
-                return fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
-                    headers: header,
-                    method: 'POST',
-                    body: JSON.stringify({name: playlistName})
-                })
-                .then(response => response.json())
-                .then(jsonResponse => {
-                    const playlistId = jsonResponse.id;
-                    return fetch(`https://api.spotify.com/v1/audio-features/${playlistId}`, { headers: header })
-                })
-        })
+        return fetch(`https://api.spotify.com/v1/tracks/${trackId}`, {
+                headers: header,
+                method: 'GET'
+                }).then(response => response.json())
+
     }
 }
 
